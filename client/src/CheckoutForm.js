@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
 const origin = window.location.origin;
 
-
 export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();

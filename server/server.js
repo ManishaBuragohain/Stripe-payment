@@ -43,6 +43,38 @@ app.post("/create-payment-intent", async (req, res) => {
   }
 });
 
+app.post("/create-checkout-session", async (req, res) => {
+  // const { product } = req.body;
+  // console.log("REQ BODY", req.body);
+  const product = {
+    name: "Go FullStack with KnowledgeHut",
+    price: 1000,
+    productOwner: "KnowledgeHut",
+    description:
+      "This beginner-friendly Full-Stack Web Development Course is offered online in blended learning mode, and also in an on-demand self-paced format.",
+    quantity: 1,
+  };
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ["card"],
+    line_items: [
+      {
+        price_data: {
+          currency: "inr",
+          product_data: {
+            name: product.name,
+          },
+          unit_amount: product.price * 100,
+        },
+        quantity: product.quantity,
+      },
+    ],
+    mode: "payment",
+    success_url: "http://localhost:4242/completion",
+    cancel_url: "http://localhost:4242/",
+  });
+  res.json({ id: session.id });
+});
+
 app.listen(5252, () =>
   console.log(`Node server listening at http://localhost:5252`)
 );

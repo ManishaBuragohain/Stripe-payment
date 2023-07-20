@@ -21,10 +21,15 @@ function Payment() {
       method: "POST",
       body: JSON.stringify({}),
     }).then(async (result) => {
+      console.log("Result from use effect", result);
       var { clientSecret } = await result.json();
+      console.log("Client secret", clientSecret);
       setClientSecret(clientSecret);
     });
   }, []);
+
+  // console.log("State client secret", clientSecret);
+  // console.log("Hello");
 
   return (
     <>
